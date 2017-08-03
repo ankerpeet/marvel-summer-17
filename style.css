@@ -1,0 +1,21 @@
+ .box {
+    text-align: center;
+    padding: 25px; 
+    box-shadow: 1px 1px 5px 1px lightblue; 
+    min-height: 350px;
+} 
+.outer{
+    padding: 25px;
+}
+.char-icon{
+    max-height: 150px;
+    max-width: 150px;
+    margin-bottom: 25px;
+}
+.form-inline {
+    margin: 25px autp 25px auto;
+}
+#search-text{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}

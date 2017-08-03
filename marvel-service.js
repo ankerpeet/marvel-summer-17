@@ -1,44 +1,48 @@
 function MarvelService() {
-  var apiKey = "?apikey=e44062bbc76b37176b08325d5265a0f3";
-  var baseUrl = "https://gateway.marvel.com:443/v1/public/characters";
+  var apiKey = "apikey=00c9fc98d39faf085d72d1bae9352d29";
+  var baseUrl = "https://gateway.marvel.com:443/v1/public/characters?";
 
   var marvelResults = []
   var myRoster = []
 
-  this.search = function(query, cb) {
+  this.search = function (query, cb) {
+    var searchTerm = query;
+    var arr = query.split("")
+    for(var i = 0; i < arr.length; i++){
+      if(arr[i] == " "){
+        arr[i] = "_";
+      }
+    }
+    if(searchTerm){
+    searchTerm = "name=" + query + "&";
+  } else searchTerm = query;
 
-    // TODO: GET NAME SEARCH WORKING?????
-    // if(query){
-    //   query = '/' + query
-    // }
-
-    $.get(baseUrl + query + apiKey).then(function(res){
+    $.get(baseUrl + searchTerm + apiKey).then(function (res) {
       marvelResults = res.data.results
       cb(res.data.results)
     })
   }
 
-  this.addCharacter = function(id){
-
+  //Add to roster
+  this.addCharacter = function (id) {
+    if(myRoster.length < 6){
     var character = marvelResults.find(char => char.id == id)
-    
-    if(myRoster.indexOf(character) == -1){
+    if (myRoster.indexOf(character) == -1) {
       myRoster.push(character)
     }
-
-    // myRoster[id] = character
-
-
-    // for (var i = 0; i < marvelResults.length; i++) {
-    //   var character = marvelResults[i];
-    //   if(character.id == id){
-    //     return character
-    //   }
-    // }
-
+  }
   }
 
-  this.getRoster = function(){
+  //Remove from roster
+  this.removeCharacter = function (id) {
+    var character = marvelResults.find(char => char.id == id);
+    var num = myRoster.indexOf(character);
+    if (num != -1) {
+      myRoster.splice(num, 1);
+    }
+  }
+
+  this.getRoster = function () {
     return JSON.parse(JSON.stringify(myRoster))
   }
 
